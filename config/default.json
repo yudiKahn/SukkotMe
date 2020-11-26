@@ -1,0 +1,6 @@
+{
+    "mongoURI":"mongodb+srv://yudikahn:thisisyudi770@fcc-myfirstcluster-fecus.mongodb.net/mern?retryWrites=true&w=majority",
+    "jwtSecret":"stam_secret_token",
+    "githubClientId":"6f5884657c6cb466cfbc",
+    "githubSecret":"6c116e29c195341b4170b8c7af5fb34cdce09cb2"
+}
