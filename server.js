@@ -4,7 +4,6 @@ const path     = require('path');
 const config = require('config');
 
 const app = express();
-app.use(express.static('public'));
 
 mongoose.connect(config.get('mongoURI'), {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
         .then(() => console.log('connection to db established...'))
