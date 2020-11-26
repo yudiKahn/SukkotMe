@@ -1,42 +1,37 @@
 import axios from 'axios';
-import {REGISTER_FAIL, REGISTER_SUCCESS, USER_LOADED, AUTH_ERROR, LOGIN_FAIL,
-     LOGIN_SUCCESS, LOG_OUT, CLEAR_PROFILE} from './types';
-import {setAlert} from './alert';
-import setAuthToken from '../utils/setAuthToken';
-
+import { setError } from './errors';
+import {LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGOUT,
+    PROFILE_UPDATED, PROFILE_UPDATED_ERROR} from './types';
 
 export const loadUser = () => async dispatch => {
     if(localStorage.token){
-        setAuthToken(localStorage.token);
+        axios.defaults.headers.common['x-auth-token'] = localStorage.token;   
+    } else {
+        delete  axios.defaults.headers.common['x-auth-token'];
     }
     try {
-        const res = await axios.get('/api/auth');
+        const res = await axios.get('/api/users/user');
         dispatch({
             type: USER_LOADED,
             payload: res.data
         })
-    } catch (err) {
+    } catch {
         dispatch({type: AUTH_ERROR});
     }
 }
 
-
-export const register = ({name, email, password}) => async dispatch => {
+export const register = (email, password, phone_number, street, city, state, zip, firstName, lastName) => async dispatch => {
     const config = {
         header: {'Content-Type': 'application/json'}
     };
     try {
-        const res = await axios.post('/api/users', {name, email, password}, config);
+        const res = await axios.post('/api/users', {email, password, phone_number, street, city, state, zip, firstName, lastName}, config);
         dispatch({
             type: REGISTER_SUCCESS,
             payload: res.data
         });
-        dispatch(loadUser());
     } catch (err) {
-        const errors = err.response.data.errors;
-        if(errors){
-            errors.forEach(e=> dispatch(setAlert(e.msg, 'danger')));
-        }
+        setError(err.response.data.err)(dispatch);
         dispatch({ type: REGISTER_FAIL });
     }
 }
@@ -46,22 +41,29 @@ export const login = (email, password) => async dispatch => {
         header: {'Content-Type': 'application/json'}
     };
     try {
-        const res = await axios.post('/api/auth', {email, password}, config);
+        const res = await axios.post('/api/users/login', {email, password}, config);
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data
         });
-        dispatch(loadUser())
     } catch (err) {
-        const errors = err.response.data.errors;
-        if(errors){
-            errors.forEach(e=> dispatch(setAlert(e.msg, 'danger')));
-        }
+        setError(err.response.data.err)(dispatch);
         dispatch({ type: LOGIN_FAIL });
     }
 }
 
-export const logout = () => dispatch => {
-    dispatch({ type: CLEAR_PROFILE})
-    dispatch({ type: LOG_OUT });
+export const logout = () => async dispatch => {
+    dispatch({type: LOGOUT})
+}
+
+export const updateUserProfile = (user) => async dispatch => {
+    try {
+        const body = user;
+        body.userId = user._id;
+        let res = await axios.put('/api/users', body);
+        dispatch({type: PROFILE_UPDATED, payload: res.data})
+    } catch (err) {
+        setError(err.response.data.err)(dispatch);
+        dispatch({type: PROFILE_UPDATED_ERROR});
+    }
 }

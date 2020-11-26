@@ -1,56 +1,49 @@
-import React, {useEffect} from 'react';
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import './App.css';
-import Navbar from './components/Navbar';
-import Landing from './components/Landing';
-import Login from './components/Login';
-import Register from './components/Register';
-import Alert from './components/Alert';
-import Dashboard from './components/Dashboard';
-import PrivateRoute from './components/PrivateRoute';
-import CreateForm from './components/Profile/CreateForm';
-import EditProfile from './components/Profile/EditProfile';
-import AddExperience from './components/Profile/AddExperience';
-import AddEducation from './components/Profile/AddEducation';
-import Profiles from './components/Profiles/Profiles';
-import Profile from './components/Profile/Profile';
-import Posts from './components/posts/Post';
-import Post from './components/Post/Post';
+import React, { useEffect } from 'react';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+
 //Redux
 import {Provider} from 'react-redux';
-import store from './store';
-import {loadUser} from './actions/auth';
-import setAuthToken from './utils/setAuthToken';
-
-if(localStorage.token){
-  setAuthToken(localStorage.token)
-}
+import store from './store'
+import { loadUser } from './actions/auth';
+import { loadItems } from './actions/items';
+import Login from './components/user/Login';
+import Home from './components/user/Home';
+import Navbar from './components/layout/Navbar';
+import Shop from './components/user/Shop';
+import Cart from './components/user/Cart';
+import Footer from './components/layout/Footer';
+import Orders from './components/user/Orders';
+import Gallery from './components/layout/Gallery';
+import Profile from './components/user/Profile';
+import Errors from './components/layout/Errors';
+import Users from './components/admin/Users';
+import Items from './components/admin/Items';
+import AdminOrders from './components/admin/Orders';
 
 const App = () => {
   useEffect(()=>{
-    store.dispatch(loadUser())
+    store.dispatch(loadUser());
+    store.dispatch(loadItems());
   }, []);
 
   return (<Provider store={store}>
     <Router>
       <Navbar/>
-      <Route exact path="/" component={Landing}/>
-      <section className="container">         
-          <Alert/>
-          <Switch>
-              <Route exact path="/register" component={Register}/>
-              <Route exact path="/login" component={Login}/>
-              <Route exact path="/profiles" component={Profiles}/>
-              <Route exact path="/profile/:id" component={Profile}/>
-              <PrivateRoute exact path="/dashboard" component={Dashboard}/>
-              <PrivateRoute exact path="/create-profile" component={CreateForm}/>
-              <PrivateRoute exact path="/edit-profile" component={EditProfile}/>
-              <PrivateRoute exact path="/add-experience" component={AddExperience}/>
-              <PrivateRoute exact path="/add-education" component={AddEducation}/>
-              <PrivateRoute exact path="/posts" component={Posts}/>
-              <PrivateRoute exact path="/posts/:id" component={Post}/>
-          </Switch>
-      </section>
+      <Route path="/" exact component={Login}/>
+      <Errors/>
+      <Switch>
+        <Route path="/home" exact component={Home}/>
+        <Route path="/shop" exact component={Shop}/>
+        <Route path="/cart" exact component={Cart}/>
+        <Route path="/orders" exact component={Orders}/>
+        <Route path="/gallery" exact component={Gallery}/>
+        <Route path="/profile" exact component={Profile}/>
+        <Route path="/admin/users" exact component={Users}/>
+        <Route path="/admin/items" exact component={Items}/>
+        <Route path="/admin/orders" exact component={AdminOrders}/>
+      </Switch>
+      <Footer/>
     </Router>
   </Provider>);
 }

@@ -1,27 +1,31 @@
-const express = require('express');
-const app = express();
-const path = require('path');
 const mongoose = require('mongoose');
+const express  = require('express');
+const path     = require('path');
 const config = require('config');
 
-mongoose.connect(config.get('mongoURI'), {useNewUrlParser: true, useUnifiedTopology: true})
-        .then(()=>console.log('connected to db...'))
-        .catch((er)=>console.error(er));
+const app = express();
+app.use(express.static('public'));
 
-app.use(express.json({ extended: false }))
+mongoose.connect(config.get('mongoURI'), {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
+        .then(() => console.log('connection to db established...'))
+        .catch(er => console.log(`connection to db faild. Error: ${er}`));
 
-app.use('/api/users', require('./routs/users'));
-app.use('/api/auth', require('./routs/auth'));
-app.use('/api/profile', require('./routs/profile'));
-app.use('/api/posts', require('./routs/posts'));
+
+app.use(express.json({ extended: false }));
+
+app.use('/api/users',  require('./routs_api/users'));
+app.use('/api/orders', require('./routs_api/orders'));
+app.use('/api/items', require('./routs_api/items'));
 
 if(process.env.NODE_ENV === 'production'){
     app.use(express.static('client/build'));
-    app.get('*', (req, res)=>{
+
+    app.get('*', (req,res)=>{
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
     })
 }
 
-const listener = app.listen(process.env.PORT||8000, ()=>{
-    console.log(`Listening on port ${listener.address().port}`)
+
+const listener = app.listen(process.env.PORT || 8000, ()=>{
+    console.log(`backend runing on port ${listener.address().port}`);
 });
