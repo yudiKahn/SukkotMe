@@ -1,3 +1,15 @@
-{
-    
-}
+[
+    {"type":"Budget Esrog","price":50},
+    {"type":"Israeli set", "price": [{"A":35},{"B":29},{"C":24}], "option": ["PITOM", "NO PITOM"]},
+    {"type":"Yannever set","price": [{"A":300},{"B":200},{"C":150},{"D":100}], "option": ["PITOM", "NO PITOM"]},
+    {"type":"Lulav","price":[{"Deri Much Lulav":40},{"Deri Lulav":20},{"Egyptian Lulav":10}]},
+    {"type":"Aruvos","price":3},
+    {"type":"Hadasim", "price": [{"A כולו חזון איש" :15}, {"B כולו חיים נאה":10},{"C רובו חיים נאה":5}]},
+    {"type":"Hoshnos","price":5},
+    {"type":"Koisaklach","price":0},
+    {"type":"Plastic bag","price":0},
+    {"type":"Schach 6 × 10","price":75},
+    {"type":"Schach 8 × 12","price":100},
+    {"type":"Plastic Lulav bag","price":4},
+    {"type":"Plastic Deri Lulav bag","price":5}
+]
