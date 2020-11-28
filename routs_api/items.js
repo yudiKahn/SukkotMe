@@ -1,11 +1,18 @@
 const router = require('express').Router();
 const fs     = require('fs');
 const {authAdmin} = require('../middleware/auth');
+const Item = require('../models/Item');
 
-
+// @route   GET api/items
+// @desc    get all items.
 router.get('/', [authAdmin], (req,res)=>{
     let path = __dirname.replace('routs_api','items.json');
-    res.sendFile(path);
+    try {
+        let data = JSON.parse(fs.readFileSync(path, {encoding: 'utf-8'}));
+        return res.json(data);
+    } catch (err) {
+        return res.status(400).json(err);
+    }
 })
 
 // @route   POST api/items
@@ -20,8 +27,9 @@ router.post('/', [authAdmin], (req, res)=>{
         return res.json({msg: 'No Change Made.'});
     else{
         try {
-            fs.writeFileSync(path, JSON.stringify(data), {encoding: 'utf-8'});
-            res.json({msg: 'successfuly update.'})
+            let items = data.map(obj => Item.getNew(obj).toString() && Item.getNew(obj));
+            fs.writeFileSync(path, JSON.stringify(items), {encoding: 'utf-8'});
+            res.json({msg: 'successfuly update.', items})
         } catch (err) {
             return res.status(400).json({err});
         }
@@ -32,24 +40,12 @@ router.post('/', [authAdmin], (req, res)=>{
 // @desc    return items.json file to default state
 router.post('/default', [authAdmin], (req,res)=>{
     const defaultItems = [
-        {"type":"Budget Esrog","price":50},
-        {"type":"Israeli set", "price": [{"A":35},{"B":29},{"C":24}], "option": ["PITOM", "NO PITOM"]},
-        {"type":"Yannever set","price": [{"A":300},{"B":200},{"C":150},{"D":100}], "option": ["PITOM", "NO PITOM"]},
-        {"type":"Lulav","price":[{"Deri Much Lulav":40},{"Deri Lulav":20},{"Egyptian Lulav":10}]},
-        {"type":"Aruvos","price":3},
-        {"type":"Hadasim", "price": [{"A כולו חזון איש" :15}, {"B כולו חיים נאה":10},{"C רובו חיים נאה":5}]},
-        {"type":"Hoshnos","price":5},
-        {"type":"Koisaklach","price":0},
-        {"type":"Plastic bag","price":0},
-        {"type":"Schach 6 × 10","price":75},
-        {"type":"Schach 8 × 12","price":100},
-        {"type":"Plastic Lulav bag","price":4},
-        {"type":"Plastic Deri Lulav bag","price":5}
+
     ];
     try {
         let path = __dirname.replace('routs_api','items.json');
         fs.writeFileSync(path, JSON.stringify(defaultItems), {encoding: 'utf-8'});
-        res.json({msg: 'successfuly update.'})
+        res.json({msg: 'Back To Default.'})
     } catch (err) {
         return res.status(400).json({err});
     }

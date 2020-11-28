@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { setError } from './errors';
+import { setAlert } from './alerts';
 import {LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGOUT,
     PROFILE_UPDATED, PROFILE_UPDATED_ERROR} from './types';
 
@@ -31,7 +31,7 @@ export const register = (email, password, phone_number, street, city, state, zip
             payload: res.data
         });
     } catch (err) {
-        setError(err.response.data.err)(dispatch);
+        setAlert(err.response.data.err)(dispatch);
         dispatch({ type: REGISTER_FAIL });
     }
 }
@@ -47,7 +47,7 @@ export const login = (email, password) => async dispatch => {
             payload: res.data
         });
     } catch (err) {
-        setError(err.response.data.err)(dispatch);
+        setAlert(err.response.data.err)(dispatch);
         dispatch({ type: LOGIN_FAIL });
     }
 }
@@ -63,7 +63,7 @@ export const updateUserProfile = (user) => async dispatch => {
         let res = await axios.put('/api/users', body);
         dispatch({type: PROFILE_UPDATED, payload: res.data})
     } catch (err) {
-        setError(err.response.data.err)(dispatch);
+        setAlert(err.response.data.err)(dispatch);
         dispatch({type: PROFILE_UPDATED_ERROR});
     }
 }

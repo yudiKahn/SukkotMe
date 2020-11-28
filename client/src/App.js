@@ -16,7 +16,7 @@ import Footer from './components/layout/Footer';
 import Orders from './components/user/Orders';
 import Gallery from './components/layout/Gallery';
 import Profile from './components/user/Profile';
-import Errors from './components/layout/Errors';
+import Alerts from './components/layout/Alerts';
 import Users from './components/admin/Users';
 import Items from './components/admin/Items';
 import AdminOrders from './components/admin/Orders';
@@ -31,7 +31,7 @@ const App = () => {
     <Router>
       <Navbar/>
       <Route path="/" exact component={Login}/>
-      <Errors/>
+      <Alerts/>
       <Switch>
         <Route path="/home" exact component={Home}/>
         <Route path="/shop" exact component={Shop}/>

@@ -5,17 +5,20 @@ import { Redirect } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 import axios from 'axios';
 import {loadItems} from '../../actions/items';
+import {setAlert} from '../../actions/alerts';
 
-const Items = ({isAdmin, isAuth, loading, items, loadItems}) => {
+const Items = ({isAdmin, isAuth, loading, items, loadItems, setAlert}) => {
     const [stateItems, setItems] = useState(items);
 
-    const updateItems = async() => {
-        await axios.post('/api/items', stateItems);
+    const onUpdateItems = async() => {
+        let res = await axios.post('/api/items', stateItems);
+        setAlert([{msg: res.data.msg, type: 'success'}]);
         loadItems();
     }
     const restoreToDefault = async() => {
-        await axios.post('/api/items/default');
-        loadItems()
+        let res = await axios.post('/api/items/default');
+        setAlert([{msg: res.data.msg, type: 'success'}]);
+        loadItems();
     }
 
     useEffect(() => {
@@ -35,21 +38,16 @@ const Items = ({isAdmin, isAuth, loading, items, loadItems}) => {
                 updateObj.type = e.target.value;
                 break;
             case 'price': 
-                if(e.target.value.split(',').length > 1){
-                    updateObj.price = [];
-                    updateObj.price[0] = e.target.value.split(',').map(p=> p.split(':')[1] ? p.split(':')[1] : '');
-                    updateObj.price[1] = e.target.value.split(',').map(p=> p.split(':')[0] ? p.split(':')[0] : '');
-                } else if(Number(e.target.value)){
-                    updateObj.price =  Number(e.target.value);
-                } else{
-                    return
-                }
+                updateObj.prices = e.target.value.split(',');
+                break;
+            case 'pricetype':
+                updateObj.pricesTypes = e.target.value.split(',');
                 break;
             case 'option':
-                updateObj.option = e.target.value.split(',');
+                updateObj.options = e.target.value.split(',');
                 break;
             default:
-                
+                break;
         }
         strState[index] = updateObj;
 
@@ -57,12 +55,14 @@ const Items = ({isAdmin, isAuth, loading, items, loadItems}) => {
         setItems(updateState);
     }
 
-
     const onDeleteItem = type => {
         let updateState = stateItems.filter(obj => obj.type !== type);
         setItems(updateState);
     }
 
+    const onAdd = () => {
+        setItems([...stateItems, {type:'',prices:[],pricesTypes:[],options:[]}]);
+    }
 
     if(!isAuth && !loading)
         return <Redirect to="/"/>
@@ -78,18 +78,18 @@ const Items = ({isAdmin, isAuth, loading, items, loadItems}) => {
                 <tr>
                     <th><i className="fa fa-trash"></i></th>
                     <th>ITEM</th>
-                    <th>PRICE</th>
+                    <th>PRICES</th>
                     <th>OPTIONS</th>
                 </tr>
             </thead>
             <tbody>
                 { stateItems.map((obj,i) => <Item key={i} item={obj} func={{onChange, onDeleteItem}}/>) }
                 <tr>
-                    <td><i className="badge badge-success pointer">+</i></td>
+                    <td onClick={onAdd} className="pointer"><i className="badge badge-success">+</i></td>
                 </tr>
             </tbody>
         </table>
-        <button className="btn btn-success my-1" onClick={updateItems}>UPDATE</button>
+        <button className="btn btn-success my-1" onClick={onUpdateItems}>UPDATE</button>
         <br/>
         <button className="btn btn-success my-1" onClick={restoreToDefault}>RETURN TO DEFAULT</button>
         </div>
@@ -102,6 +102,7 @@ Items.propTypes = {
     loading: PropTypes.bool.isRequired,
     items: PropTypes.array.isRequired,
     loadItems: PropTypes.func.isRequired,
+    setAlert: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -111,18 +112,11 @@ const mapStateToProps = state => ({
     items: state.items
 })
 
-export default connect(mapStateToProps, {loadItems})(Items);
+export default connect(mapStateToProps, {loadItems, setAlert})(Items);
 
-function Item({item: {type, price, option}, func}){
+function Item({item: {type, prices, pricesTypes, options}, func}){
     const {onDeleteItem, onChange} = func;
 
-    if(typeof type === 'undefined' || typeof price === 'undefined')
-        return (<tr>
-            <td><i className="badge badge-danger pointer">&times;</i></td>
-            <td>
-                aa
-            </td>
-        </tr>);
     return (<tr>
         <td>
             <i className="badge badge-danger pointer" onClick={()=>onDeleteItem(type)}>&times;</i>
@@ -131,15 +125,11 @@ function Item({item: {type, price, option}, func}){
             <input type="text" value={type} onChange={e=>onChange(e, type, 'type')} className="form-control"/>
         </td>
         <td>
-        {
-            typeof price === 'number' ?
-            <input value={price} className="form-control" onChange={e=>onChange(e, type, 'price')}/> : 
-            <input value={price[0].map((p,i)=>`${price[1][i]}:${p}`)}
-                className="form-control" onChange={e=>onChange(e, type, 'price')}/>
-        }
+            <input className="form-control" value={prices.map(v=>v)} onChange={e => onChange(e, type, 'price')}/>
+            <input className="form-control" value={pricesTypes.map(v=>v)} onChange={e => onChange(e, type, 'priceType')}/>
         </td>
-        <td>
-            <input className="form-control" value={typeof option === 'object' ? option.map(v=>v) : ''} onChange={e => onChange(e, type, 'option')}/>
+        <td>  
+            <input className="form-control" value={options.map(v=>v)} onChange={e => onChange(e, type, 'option')}/>
         </td>
     </tr>)
 }

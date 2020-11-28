@@ -26,7 +26,7 @@ const Footer = ({isAuth}) => {
                 </ul>
             </div>
         </div>
-        <p className="text-dark text-left p-2 m-0"><small>&copy; Yudi Kahn {new Date().getFullYear()}</small></p>
+        <p className="text-dark text-center p-2 m-0"><small>&copy; Yudi Kahn {new Date().getFullYear()}</small></p>
     </footer>)
 }
 

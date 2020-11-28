@@ -6,10 +6,15 @@ const jwt                             = require('jsonwebtoken');
 const {authUser, authAdmin}           = require('../middleware/auth');
 const config = require('config');
 
-const isAdmin = ({email,password,_id}) => (
-   email && password && _id &&
-   config.get('ADMIN').find(obj => obj.email==email && obj.password==password || obj.id==_id.toString())?true:false
-);
+function isAdmin({email,password,_id}){
+    let res = false,
+        admin = config.get('ADMIN');
+    if(email && password)
+        res = admin.find(obj => obj.email==email && obj.password==password) ? true : false;
+    if(_id)
+        res = admin.find(obj => obj.id.toString() === _id.toString()) ? true : false;
+    return res;
+};
 
 // @route   POST api/users
 // @desc    register user

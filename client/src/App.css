@@ -17,6 +17,24 @@
     border-bottom:2px solid var(--green) ;
     color: var(--green);
 }
+.alerts{
+    position: fixed;
+    width: 100vw; height: 100vh;
+    top: 0; left: 0;
+    background-color: #5a5a5abd;
+    z-index: 100;
+}
+.alerts > div:first-of-type{
+    min-height: 100%;
+    max-height: fit-content;
+    overflow-y: auto;
+}
+.alerts .alert{
+    position: relative;
+    width: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+}
 /*B*/
 body, html{
     margin: 0; padding: 0;
@@ -67,24 +85,7 @@ body, html{
     left: 20px;
 }
 /*E*/
-.errors{
-    position: fixed;
-    width: 100vw; height: 100vh;
-    top: 0; left: 0;
-    background-color: #f8d7dabd;
-    z-index: 100;
-}
-.errors > div:first-of-type{
-    min-height: 100%;
-    max-height: fit-content;
-    overflow-y: auto;
-}
-.errors .alert{
-    position: relative;
-    width: 50%;
-    left: 50%;
-    transform: translateX(-50%);
-}
+
 /*F*/
 footer{
     min-height: 70px;
@@ -286,7 +287,7 @@ footer{
 .sidebar{
     position: fixed;
     top: 0; left: 0;
-    background-color: rgba(59, 59, 59, 0.9);
+    background-color: rgba(59, 59, 59, 0.99);
     overflow-x: hidden;
     width: 30%; z-index: 10;
     transition: 0.5s;
@@ -304,6 +305,15 @@ footer{
 .sidebar-content{
     height: 70%;
 }
+.sidebar.hide{display: none; }
+.sidebar.show{display: block; animation: moveRight 3s;}
+@keyframes moveRight {
+    0% {transform: translateX(-100%);}
+    20% {transform: translateX(-1%);}
+    40% {transform: translateX(-10%);}
+    100% {transform: translateX(0%);}
+}
+
 .small{ font-size: 70% !important;}
 .shop, .cart{
     min-height: calc(100vh - 70px);
@@ -367,7 +377,7 @@ footer{
     .admin-orders-links div{
         min-width: calc(600px / 4);
     }
-    
+    .sidebar * {color: #f1f1f1;}
 }
 
 @media only screen and (max-width: 350px){

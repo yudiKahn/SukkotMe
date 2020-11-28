@@ -2,7 +2,7 @@ import {SET_ERROR, CLEAR_ERROR} from '../actions/types';
 
 const initState = []
 
-function errors(state=initState, action){
+function alerts(state=initState, action){
     const {type, payload} = action;
     switch(type){
         case SET_ERROR:
@@ -14,4 +14,4 @@ function errors(state=initState, action){
     }
 }
 
-export default errors;
+export default alerts;

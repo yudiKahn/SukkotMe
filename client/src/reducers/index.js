@@ -2,9 +2,9 @@ import { combineReducers } from  'redux';
 import auth from './auth';
 import items from './items';
 import orders from './orders';
-import errors from './errors';
+import alerts from './alerts';
 import admin from './admin';
 
 export default combineReducers({
-    auth, items, orders, errors, admin
+    auth, items, orders, alerts, admin
 });

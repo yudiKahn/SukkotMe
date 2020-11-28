@@ -1,28 +1,30 @@
-import React, { Fragment } from 'react';
+import React, { Fragment,useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import {logout} from '../../actions/auth';
 
 const Navbar = ({isAuth, user, logout, isAdmin}) => {
+    const [isSidebarVis, setSidebarVis] = useState(false);
+
 
     if(!isAuth)
         return null
     return (<Fragment>
         <nav className="navbar navbar-light bg-white fixed-top" style={{height:70, boxShadow:'2px 2px 10px black', zIndex:2}}>
-            <div type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+            <div type="button" onClick={()=>setSidebarVis(!isSidebarVis)}>
                 <span className="navbar-toggler-icon"></span>
             </div>
             <Link className="navbar-brand navbar-header" to="/">SukkotMe</Link>
             <span>{user.firstName[0].toUpperCase()}.{user.lastName[0].toUpperCase()}</span>
         </nav>
 
-        <div className="sidebar h-100 p-3 collapse navbar-collapse" id="sidebar">
+        <div className={`sidebar h-100 p-3 ${isSidebarVis ? 'show' : 'hide'}`}>
             <h1 className="row mx-0 justify-content-between" style={{fontSize:30}}>
                 <Link style={{textDecoration:'none'}} to="/">
                     <i className="col-7 text-left pb-2 hover">SukkotMe</i>
                 </Link>
-                <i className="col-3 text-right sidebar-close" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+                <i className="col-3 text-right sidebar-close" onClick={()=>setSidebarVis(!isSidebarVis)}>
                     <b className="hover">x</b>
                 </i>
             </h1>

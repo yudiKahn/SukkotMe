@@ -64,14 +64,14 @@ const Cart = ({isAuth, loading, createOrder, user}) => {
                     {
                         cartItems.map((obj,i)=>(<tr key={i}>
                             <td onClick={()=>delItem(obj)}><i className="pointer badge badge-danger">&times;</i></td>
-                            <td>{obj.type}</td>
-                            <td>${obj.price}.00</td>
+                            <td>{obj.type} {obj.option && <small>{obj.option}</small>}</td>
+                            <td>${Number(obj.price).toFixed(2)}</td>
                             <td>
                                 <i className="badge badge-success mr-2 pointer" onClick={e=>modifyQ(e, obj)}>-</i>
                                 {obj.q}
                                 <i className="badge badge-success ml-2 pointer" onClick={e=>modifyQ(e, obj)}>+</i>
                             </td>
-                            <td>${Number(obj.q)*Number(obj.price)}.00</td>
+                            <td>${(Number(obj.q)*Number(obj.price)).toFixed(2)}</td>
                         </tr>))
                     }
                 </tbody>
