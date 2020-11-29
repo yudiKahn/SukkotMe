@@ -4,6 +4,14 @@ const path     = require('path');
 const config = require('config');
 const app = express();
 
+//force https
+app.use((req,res,next)=>{
+    if(!req.secure && req.get('x-forwarded-proto') !== 'https' && process.env.NODE_ENV === 'production'){
+        return res.redirect('https://' + req.get('host') + req.url);
+    }
+    return next();
+})
+
 mongoose.connect(config.get('mongoURI'), {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
         .then(() => console.log('connection to db established...'))
         .catch(er => console.log(`connection to db faild. Error: ${er}`));
