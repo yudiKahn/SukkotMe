@@ -1,1 +1,151 @@
-[{"type":"Budget Esrog","prices":["50"],"pricesTypes":[],"options":[],"id":"1606588674981c9z2k4n0e3v8d4n7w3n2"},{"type":"Israeli Set","prices":["35"," 29"," 24"],"pricesTypes":["A","B","C"],"options":["PITOM"," NO PITOM"],"id":"1606588674981o0p6u1x6r0m7n6h3i0p8"},{"type":"Yanever Set","prices":["300"," 200"," 150"," 100"],"pricesTypes":["A","B","C","D"],"options":["PITOM"," NO PITOM"],"id":"1606588674981n3s9p0a5h9r1l9c5t8w4"},{"type":"Lulav Pl","prices":["40"," 20"," 10"],"pricesTypes":["Deri Much Lulav"," Deri Lulav"," Egyptian Lulav"],"options":[],"id":"1606588674981g0e5c1a2e7v7j1c4z3e2"},{"type":"Aruvos","prices":["3"],"pricesTypes":[],"options":[],"id":"1606588674981c0n3s3m6d9g6b7q4w5v1"},{"type":"Hadasim","prices":["15","10","5"],"pricesTypes":["A כולו חזון איש"," B כולו חיים נאה","C רובו חיים נאה"],"options":[],"id":"1606588674981q4k1h3b5n9e9y8j8w4q0"},{"type":"Hoshnos","prices":["5"],"pricesTypes":[],"options":[],"id":"1606588674981f5y6o4n4t5v2l8p3w4u3"},{"type":"Koisaklach","prices":["0"],"pricesTypes":[],"options":[],"id":"1606588674981o4o2n5z9l7w0k6t4s4w2"},{"type":"Lulav Plastic Bag","prices":["0"],"pricesTypes":[],"options":[],"id":"1606588674981d0y8r2u1j5t9p6g2h7p7"},{"type":"Schach 6 x 10","prices":["75"],"pricesTypes":[],"options":[],"id":"1606588674981e2c1b0s2k8a9e8k1w1a8"},{"type":"Schach 8 x 12","prices":["100"],"pricesTypes":[],"options":[],"id":"1606588674981t8w7v7h4e0w5n8g9w1s1"},{"type":"Zipperd Lulav Bag","prices":["4"],"pricesTypes":[],"options":[],"id":"1606588674981h1a0x8j6d4m9m4n3x3i6"},{"type":"Deri Zipperd Lulav Bag","prices":["5"],"pricesTypes":[],"options":[],"id":"1606588674981h2u4a5i9e9t9k6y7b9k1"}]
+[
+    {
+        "type": "Budget Esrog",
+        "prices": [
+            "50"
+        ],
+        "pricesTypes": [],
+        "options": [],
+        "id": "1606588674981c9z2k4n0e3v8d4n7w3n2"
+    },
+    {
+        "type": "Israeli Set",
+        "prices": [
+            "35",
+            " 29",
+            " 24"
+        ],
+        "pricesTypes": [
+            "A",
+            "B",
+            "C"
+        ],
+        "options": [
+            "PITOM",
+            "NO PITOM"
+        ],
+        "id": "1606588674981o0p6u1x6r0m7n6h3i0p8"
+    },
+    {
+        "type": "Yanever Set",
+        "prices": [
+            "300",
+            " 200",
+            " 150",
+            " 100"
+        ],
+        "pricesTypes": [
+            "A",
+            "B",
+            "C",
+            "D"
+        ],
+        "options": [
+            "PITOM",
+            " NO PITOM"
+        ],
+        "id": "1606588674981n3s9p0a5h9r1l9c5t8w4"
+    },
+    {
+        "type": "Lulav Pl",
+        "prices": [
+            "40",
+            " 20",
+            " 10"
+        ],
+        "pricesTypes": [
+            "Deri Much Lulav",
+            " Deri Lulav",
+            " Egyptian Lulav"
+        ],
+        "options": [],
+        "id": "1606588674981g0e5c1a2e7v7j1c4z3e2"
+    },
+    {
+        "type": "Aruvos",
+        "prices": [
+            "3"
+        ],
+        "pricesTypes": [],
+        "options": [],
+        "id": "1606588674981c0n3s3m6d9g6b7q4w5v1"
+    },
+    {
+        "type": "Hadasim",
+        "prices": [
+            "15",
+            "10",
+            "5"
+        ],
+        "pricesTypes": [
+            "A כולו חזון איש",
+            " B כולו חיים נאה",
+            "C רובו חיים נאה"
+        ],
+        "options": [],
+        "id": "1606588674981q4k1h3b5n9e9y8j8w4q0"
+    },
+    {
+        "type": "Hoshnos",
+        "prices": [
+            "5"
+        ],
+        "pricesTypes": [],
+        "options": [],
+        "id": "1606588674981f5y6o4n4t5v2l8p3w4u3"
+    },
+    {
+        "type": "Koisaklach",
+        "prices": [
+            "0"
+        ],
+        "pricesTypes": [],
+        "options": [],
+        "id": "1606588674981o4o2n5z9l7w0k6t4s4w2"
+    },
+    {
+        "type": "Lulav Plastic Bag",
+        "prices": [
+            "0"
+        ],
+        "pricesTypes": [],
+        "options": [],
+        "id": "1606588674981d0y8r2u1j5t9p6g2h7p7"
+    },
+    {
+        "type": "Schach 6 x 10",
+        "prices": [
+            "75"
+        ],
+        "pricesTypes": [],
+        "options": [],
+        "id": "1606588674981e2c1b0s2k8a9e8k1w1a8"
+    },
+    {
+        "type": "Schach 8 x 12",
+        "prices": [
+            "100"
+        ],
+        "pricesTypes": [],
+        "options": [],
+        "id": "1606588674981t8w7v7h4e0w5n8g9w1s1"
+    },
+    {
+        "type": "Zipperd Lulav Bag",
+        "prices": [
+            "4"
+        ],
+        "pricesTypes": [],
+        "options": [],
+        "id": "1606588674981h1a0x8j6d4m9m4n3x3i6"
+    },
+    {
+        "type": "Deri Zipperd Lulav Bag",
+        "prices": [
+            "5"
+        ],
+        "pricesTypes": [],
+        "options": [],
+        "id": "1606588674981h2u4a5i9e9t9k6y7b9k1"
+    }
+]

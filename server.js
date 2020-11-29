@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const express  = require('express');
 const path     = require('path');
-const config = require('config');
 const app = express();
+require('dotenv').config();
 
 //force https
 app.use((req,res,next)=>{
@@ -10,9 +10,9 @@ app.use((req,res,next)=>{
         return res.redirect('https://' + req.get('host') + req.url);
     }
     return next();
-})
+});
 
-mongoose.connect(config.get('mongoURI'), {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
+mongoose.connect(process.env.DB, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
         .then(() => console.log('connection to db established...'))
         .catch(er => console.log(`connection to db faild. Error: ${er}`));
 

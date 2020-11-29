@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const config = require('config');
 
 function authUser(req, res, next){
     const token = req.header('x-auth-token');
@@ -7,7 +6,7 @@ function authUser(req, res, next){
         return res.status(401).json({msg: 'no token'})
     }
     try{
-        const decoded = jwt.verify(token, config.get('jwtSecret'));
+        const decoded = jwt.verify(token, process.env.JWT);
         req.user = decoded.user;
         next();
     } catch(err) {
@@ -22,9 +21,9 @@ function authAdmin(req, res, next){
         return res.status(401).json({msg: 'no token'})
     }
     try{
-        const decoded = jwt.verify(token, config.get('jwtSecret'));
+        const decoded = jwt.verify(token, process.env.JWT);
         let id = decoded.user.id;
-        let isAdmin = config.get('ADMIN').find(obj => obj.id.toString()===id.toString())?true:false;
+        let isAdmin = JSON.parse(process.env.ADMIN).find(obj => obj.id.toString()===id.toString())?true:false;
         if(isAdmin)
             return next();
         res.status(401).json({msg: 'token is not valid'})

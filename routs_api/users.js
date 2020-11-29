@@ -4,11 +4,10 @@ const User                            = require('../models/User');
 const bcrypt                          = require('bcryptjs');
 const jwt                             = require('jsonwebtoken');
 const {authUser, authAdmin}           = require('../middleware/auth');
-const config = require('config');
 
 function isAdmin({email,password,_id}){
     let res = false,
-        admin = config.get('ADMIN');
+        admin = JSON.parse(process.env.ADMIN);
     if(email && password)
         res = admin.find(obj => obj.email==email && obj.password==password) ? true : false;
     if(_id)
@@ -43,7 +42,7 @@ router.post('/',
             const user = new User(req.body);
             try {
                 let savedUser = await user.save();
-                jwt.sign({user:{id:savedUser._id}}, config.get('jwtSecret'), {expiresIn: "14 days"}, (err, token)=>{
+                jwt.sign({user:{id:savedUser._id}}, process.env.JWT, {expiresIn: "14 days"}, (err, token)=>{
                     if(err)
                         throw err;
                     return res.json({msg: 'User saved Succefully', token, user: savedUser, isAdmin:is_admin});
@@ -71,7 +70,7 @@ router.post('/login',
             let isUser = (user.length===1) && (await bcrypt.compare(password, user[0].password));
             if(isUser){
                 let is_admin = isAdmin({email, password,_id: user[0]._id});
-                jwt.sign({user:{id: user[0]._id}}, config.get('jwtSecret'), {expiresIn: "14 days"}, (err, token)=>{
+                jwt.sign({user:{id: user[0]._id}}, process.env.JWT, {expiresIn: "14 days"}, (err, token)=>{
                     if(err)
                         throw err;
                     return  res.json({msg: 'Successfully Login', token, user: user[0], isAdmin:is_admin})

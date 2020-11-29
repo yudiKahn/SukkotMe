@@ -1,7 +1,0 @@
-{
-    "mongoURI":"mongodb+srv://yudikahn:thisisyudi770@fcc-myfirstcluster-fecus.mongodb.net/SukkotMe?retryWrites=true&w=majority",
-    "jwtSecret":"stam_secret_token",
-    "githubClientId":"6f5884657c6cb466cfbc",
-    "githubSecret":"6c116e29c195341b4170b8c7af5fb34cdce09cb2",
-    "ADMIN": [{"email":"yudikahn8@gmail.com", "password": "123456", "id":"5fbf7ae60d09403e14c7bb42"}]
-}
